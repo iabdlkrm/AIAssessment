@@ -1,515 +1,4 @@
-<p>Transformation strategies</p>
-                        </div>
-                    </div>
-                    <div class="category-item">
-                        <div class="category-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                            </svg>
-                        </div>
-                        <div class="category-content">
-                            <h4>Risk & Outlook</h4>
-                            <p>Strategic perspectives</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="action-section">
-                <button class="start-button" onclick="startAssessment()">
-                    Start Assessment
-                    <svg viewBox="0 0 24 24">
-                        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="navigation-dots" id="navigationDots"></div>
-
-    <div id="questionsContainer">
-        <!-- Questions will be dynamically inserted here -->
-    </div>
-
-    <div class="submit-section">
-        <div class="submit-container">
-            <h2>Ready to Submit?</h2>
-            <p>You have completed all questions. Click below to see your results.</p>
-            <button class="submit-button" id="submitButton" onclick="showResults()" disabled>
-                View Results
-            </button>
-        </div>
-    </div>
-
-    <div class="results" id="results">
-        <div class="results-content">
-            <h2>Assessment Complete!</h2>
-            <p>Thank you for completing the AI Exposure and Knowledge Assessment.</p>
-            <div class="score-circle" id="scoreCircle">0%</div>
-            <p class="score-message" id="scoreMessage"></p>
-            <div class="category-scores" id="categoryScores"></div>
-        </div>
-    </div>
-
-    <script>
-        const questions = [
-            {
-                category: "AI General Knowledge",
-                question: "Which of the following accurately defines Artificial Intelligence (AI)?",
-                options: [
-                    "Human-like robots",
-                    "Machines mimicking cognitive functions",
-                    "Simple automation",
-                    "Data storage systems",
-                    "I am not familiar with this term"
-                ],
-                correct: 1
-            },
-            {
-                category: "AI General Knowledge",
-                question: "Machine Learning (ML) primarily focuses on:",
-                options: [
-                    "Automated hardware",
-                    "Learning from data",
-                    "Data visualization",
-                    "Basic software automation",
-                    "I don't know"
-                ],
-                correct: 1
-            },
-            {
-                category: "AI General Knowledge",
-                question: "What is Natural Language Processing (NLP)?",
-                options: [
-                    "AI understanding and generating human language",
-                    "Language translation software only",
-                    "Hardware communication devices",
-                    "AI used exclusively for coding",
-                    "I am not familiar with NLP"
-                ],
-                correct: 0
-            },
-            {
-                category: "AI General Knowledge",
-                question: "AI-driven automation typically involves:",
-                options: [
-                    "Human oversight in all tasks",
-                    "Fully autonomous decision-making",
-                    "Task-specific automation",
-                    "All of the above",
-                    "I don't know"
-                ],
-                correct: 3
-            },
-            {
-                category: "AI Use Cases and Applications",
-                question: "Which of the following is an example of a service that can be significantly improved by AI-powered chatbots?",
-                options: [
-                    "Legal drafting of legislation",
-                    "Manual document storage",
-                    "Physical mail sorting",
-                    "Employee payroll management",
-                    "Not sure"
-                ],
-                correct: 0
-            },
-            {
-                category: "AI Use Cases and Applications",
-                question: "AI-driven virtual assistants in government services primarily enhance:",
-                options: [
-                    "Employee vacation scheduling",
-                    "Citizen engagement and service speed",
-                    "Office space utilization",
-                    "Employee recruitment",
-                    "Not familiar with such cases"
-                ],
-                correct: 1
-            },
-            {
-                category: "AI Use Cases and Applications",
-                question: "Identify a task that is NOT suitable for AI implementation:",
-                options: [
-                    "Fraud detection",
-                    "Emergency response optimization",
-                    "Strategic policy-making",
-                    "Data entry automation",
-                    "I don't know"
-                ],
-                correct: 2
-            },
-            {
-                category: "AI Use Cases and Applications",
-                question: "Synthetic data primarily helps in:",
-                options: [
-                    "Real-time operational monitoring",
-                    "Privacy compliance and AI model training",
-                    "Direct customer communication",
-                    "Managing employee tasks",
-                    "I am not familiar with synthetic data"
-                ],
-                correct: 1
-            },
-            {
-                category: "AI Governance and Ethics",
-                question: "Which of the following is NOT one of the AI ethical principles?",
-                options: [
-                    "Transparency",
-                    "Accountability",
-                    "Privacy violation",
-                    "Fairness",
-                    "I don't know"
-                ],
-                correct: 2
-            },
-            {
-                category: "AI Governance and Ethics",
-                question: "Transparency in AI primarily means:",
-                options: [
-                    "Clear explanation of AI decision processes",
-                    "Full automation with no human oversight",
-                    "Only sharing data internally",
-                    "Eliminating human decision-making",
-                    "Unsure"
-                ],
-                correct: 0
-            },
-            {
-                category: "AI Governance and Ethics",
-                question: "What does 'AI accountability' refer to?",
-                options: [
-                    "Speed of AI processing",
-                    "Responsibility for AI outcomes and impacts",
-                    "Technical proficiency of AI systems",
-                    "Efficiency in AI model training",
-                    "Not familiar with accountability in AI"
-                ],
-                correct: 1
-            },
-            {
-                category: "AI Governance and Ethics",
-                question: "Which global initiative sets ethical guidelines for AI?",
-                options: [
-                    "Paris Accord",
-                    "Hiroshima Process",
-                    "Kyoto Protocol",
-                    "Geneva Convention",
-                    "I don't know"
-                ],
-                correct: 1
-            },
-            {
-                category: "AI Impact on Workforce",
-                question: "AI augmentation in the workforce primarily leads to:",
-                options: [
-                    "Complete job automation",
-                    "Enhanced decision-making capabilities",
-                    "Reduced workforce training",
-                    "Increased routine tasks",
-                    "Unsure"
-                ],
-                correct: 1
-            },
-            {
-                category: "AI Impact on Workforce",
-                question: "Identify the sector least likely to experience immediate job automation due to AI:",
-                options: [
-                    "Clerical jobs",
-                    "Routine data entry",
-                    "Creative strategic planning",
-                    "Manufacturing",
-                    "Not familiar with this topic"
-                ],
-                correct: 2
-            },
-            {
-                category: "AI Impact on Workforce",
-                question: "AI-driven workforce transformation should include:",
-                options: [
-                    "Minimizing workforce involvement",
-                    "Continuous employee training and reskilling",
-                    "Eliminating managerial roles",
-                    "Increasing repetitive administrative tasks",
-                    "Unsure"
-                ],
-                correct: 1
-            },
-            {
-                category: "AI Impact on Workforce",
-                question: "AI literacy across job roles is critical because:",
-                options: [
-                    "It ensures full automation",
-                    "It reduces the need for human oversight",
-                    "It enhances organizational effectiveness",
-                    "It simplifies AI models",
-                    "I don't know"
-                ],
-                correct: 2
-            },
-            {
-                category: "Risk Tolerance and Potential Outlook",
-                question: "Your comfort level with implementing AI solutions in critical operations is:",
-                options: [
-                    "High",
-                    "Moderate",
-                    "Low",
-                    "Unsure",
-                    "Not applicable"
-                ],
-                correct: -1
-            },
-            {
-                category: "Risk Tolerance and Potential Outlook",
-                question: "How confident are you in distinguishing valuable AI solutions from industry hype?",
-                options: [
-                    "Very confident",
-                    "Somewhat confident",
-                    "Not confident",
-                    "Unsure",
-                    "Not familiar enough to judge"
-                ],
-                correct: -1
-            },
-            {
-                category: "Risk Tolerance and Potential Outlook",
-                question: "In your opinion, where does AI have the highest potential impact?",
-                options: [
-                    "Labor",
-                    "Social Development",
-                    "Civil Service",
-                    "Shared Services",
-                    "I don't know"
-                ],
-                correct: -1
-            },
-            {
-                category: "Risk Tolerance and Potential Outlook",
-                question: "Ethical considerations in AI deployments are:",
-                options: [
-                    "Essential in all cases",
-                    "Only important in sensitive areas",
-                    "Generally overstated",
-                    "Not necessary with transparent algorithms",
-                    "Unsure"
-                ],
-                correct: 0
-            }
-        ];
-
-        let answers = new Array(questions.length).fill(undefined);
-        let categoryScores = {};
-
-        function initializeCategories() {
-            questions.forEach(q => {
-                if (!categoryScores[q.category]) {
-                    categoryScores[q.category] = { correct: 0, total: 0 };
-                }
-            });
-        }
-
-        function startAssessment() {
-            // Hide landing page
-            document.getElementById('landingSection').style.display = 'none';
-            
-            // Show progress indicator
-            document.getElementById('progressIndicator').classList.add('active');
-            
-            // Show first question
-            const firstQuestion = document.getElementById('question-0');
-            firstQuestion.classList.add('active');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function renderQuestions() {
-            const container = document.getElementById('questionsContainer');
-            const navigationDots = document.getElementById('navigationDots');
-            let html = '';
-            let dotsHtml = '';
-
-            questions.forEach((question, index) => {
-                html += `
-                    <div class="question-section" id="question-${index}">
-                        <div class="question-container">
-                            <div class="category-badge">${question.category}</div>
-                            <div class="question-header">
-                                <div class="question-number">${index + 1}</div>
-                                <h2 class="question-text">${question.question}</h2>
-                            </div>
-                            <div class="options">
-                                ${question.options.map((option, optionIndex) => `
-                                    <div class="option ${answers[index] === optionIndex ? 'selected' : ''}" 
-                                         onclick="selectOption(${index}, ${optionIndex})">
-                                        <span class="option-letter">${String.fromCharCode(65 + optionIndex)}</span>
-                                        <span class="option-text">${option}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            ${index < questions.length - 1 ? `
-                                <div class="scroll-indicator">
-                                    <svg viewBox="0 0 24 24">
-                                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                                    </svg>
-                                    <div class="scroll-text">Scroll for next question</div>
-                                </div>
-                            ` : ''}
-                        </div>
-                    </div>
-                `;
-
-                dotsHtml += `
-                    <div class="nav-dot ${answers[index] !== undefined ? 'answered' : ''}" 
-                         onclick="scrollToQuestion(${index})" 
-                         id="dot-${index}">
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-            navigationDots.innerHTML = dotsHtml;
-        }
-
-        function selectOption(questionIndex, optionIndex) {
-            answers[questionIndex] = optionIndex;
-            
-            // Update UI
-            const questionSection = document.getElementById(`question-${questionIndex}`);
-            const options = questionSection.querySelectorAll('.option');
-            options.forEach((option, index) => {
-                option.classList.toggle('selected', index === optionIndex);
-            });
-
-            // Update navigation dot
-            const dot = document.getElementById(`dot-${questionIndex}`);
-            dot.classList.add('answered');
-
-            updateProgress();
-
-            // Auto-advance to next question after a short delay
-            setTimeout(() => {
-                if (questionIndex < questions.length - 1) {
-                    // Hide current question
-                    questionSection.classList.remove('active');
-                    
-                    // Show next question
-                    const nextQuestion = document.getElementById(`question-${questionIndex + 1}`);
-                    nextQuestion.classList.add('active');
-                } else {
-                    // Hide current question and show submit section
-                    questionSection.classList.remove('active');
-                    document.querySelector('.submit-section').classList.add('active');
-                }
-            }, 800);
-        }
-
-        function scrollToQuestion(index) {
-            const question = document.getElementById(`question-${index}`);
-            question.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function updateProgress() {
-            const answered = answers.filter(a => a !== undefined).length;
-            const percentage = (answered / questions.length) * 100;
-            
-            document.getElementById('progressFill').style.width = `${percentage}%`;
-            document.getElementById('progressText').textContent = `${answered} of ${questions.length} questions answered`;
-            
-            const submitButton = document.getElementById('submitButton');
-            submitButton.disabled = answered < questions.length;
-        }
-
-        function calculateScores() {
-            let totalCorrect = 0;
-            let totalQuestions = 0;
-
-            questions.forEach((question, index) => {
-                const category = question.category;
-                categoryScores[category].total++;
-                
-                if (question.correct !== -1) {
-                    totalQuestions++;
-                    if (answers[index] === question.correct) {
-                        categoryScores[category].correct++;
-                        totalCorrect++;
-                    }
-                }
-            });
-
-            return { totalCorrect, totalQuestions };
-        }
-
-        function showResults() {
-            const { totalCorrect, totalQuestions } = calculateScores();
-            const percentage = Math.round((totalCorrect / totalQuestions) * 100);
-            
-            // Hide everything
-            document.getElementById('questionsContainer').style.display = 'none';
-            document.querySelector('.submit-section').style.display = 'none';
-            document.getElementById('navigationDots').style.display = 'none';
-            document.getElementById('landingSection').style.display = 'none';
-            document.getElementById('progressIndicator').style.display = 'none';
-            
-            // Show results
-            document.getElementById('results').classList.add('active');
-            document.getElementById('scoreCircle').textContent = `${percentage}%`;
-            
-            let message = '';
-            if (percentage >= 80) {
-                message = 'Excellent! You have a strong understanding of AI concepts and are well-prepared to lead AI initiatives.';
-            } else if (percentage >= 60) {
-                message = 'Good job! You have a solid foundation in AI knowledge with room for further development.';
-            } else if (percentage >= 40) {
-                message = 'You have basic AI knowledge. Consider exploring more AI resources to strengthen your understanding.';
-            } else {
-                message = 'This assessment reveals significant opportunities to enhance your AI knowledge and readiness.';
-            }
-            
-            document.getElementById('scoreMessage').textContent = message;
-            
-            // Display category scores
-            const categoryScoresHTML = Object.entries(categoryScores).map(([category, scores]) => {
-                const categoryPercentage = scores.total > 0 && scores.correct !== undefined ? 
-                    Math.round((scores.correct / scores.total) * 100) : 'N/A';
-                return `
-                    <div class="category-score">
-                        <h3>${category}</h3>
-                        <div class="category-score-value">${categoryPercentage}%</div>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('categoryScores').innerHTML = categoryScoresHTML;
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Update active navigation dot on scroll
-        window.addEventListener('scroll', () => {
-            const questionSections = document.querySelectorAll('.question-section');
-            const dots = document.querySelectorAll('.nav-dot');
-            
-            questionSections.forEach((section, index) => {
-                const rect = section.getBoundingClientRect();
-                const isInView = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
-                
-                if (isInView) {
-                    dots.forEach(dot => dot.classList.remove('active'));
-                    if (dots[index]) {
-                        dots[index].classList.add('active');
-                    }
-                }
-            });
-        });
-
-        // Initialize
-        initializeCategories();
-        renderQuestions();
-        updateProgress();
-    </script>
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -889,11 +378,6 @@
             padding: 80px 20px 20px;
             scroll-snap-align: start;
             position: relative;
-            display: none;
-        }
-
-        .question-section.active {
-            display: flex;
         }
 
         .question-container {
@@ -1101,16 +585,12 @@
 
         .submit-section {
             height: 100vh;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
             scroll-snap-align: start;
             background: #f8f9fa;
-        }
-
-        .submit-section.active {
-            display: flex;
         }
 
         .submit-container {
@@ -1324,8 +804,6 @@
             <div class="landing-header">
                 <div class="logo-title-section">
                     <div class="logo">
-                        <!-- Replace this placeholder with actual HRSD logo -->
-                        <!-- <img src="hrsd-logo.png" alt="HRSD Logo"> -->
                         <span class="logo-placeholder">HRSD LOGO</span>
                     </div>
                     <div class="title-section">
@@ -1376,6 +854,28 @@
                             </svg>
                         </div>
                         <div class="category-content">
+                            <h4>AI Impact on Workforce</h4>
+                            <p>Transformation strategies</p>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                        </div>
+                        <div class="category-content">
+                            <h4>Risk & Outlook</h4>
+                            <p>Strategic perspectives</p>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 13.75c-2.34 0-7 1.17-7 3.5V19h14v-1.75c0-2.33-4.66-3.5-7-3.5zM4.34 17c.84-.58 2.87-1.25 4.66-1.25s3.82.67 4.66 1.25H4.34zM9 12c1.93 0 3.5-1.57 3.5-3.5S10.93 5 9 5 5.5 6.57 5.5 8.5 7.07 12 9 12zm0-5c.83 0 1.5.67 1.5 1.5S9.83 10 9 10s-1.5-.67-1.5-1.5S8.17 7 9 7zm7.04 6.81c1.16.84 1.96 1.96 1.96 3.44V19h4v-1.75c0-2.02-3.5-3.17-5.96-3.44zM15 12c1.93 0 3.5-1.57 3.5-3.5S16.93 5 15 5c-.54 0-1.04.13-1.5.35.63.89 1 1.98 1 3.15s-.37 2.26-1 3.15c.46.22.96.35 1.5.35z"/>
+                            </svg>
+                        </div>
+                        <div class="category-content">
                             <h4>AI General Knowledge</h4>
                             <p>Core concepts and fundamentals</p>
                         </div>
@@ -1409,4 +909,494 @@
                             </svg>
                         </div>
                         <div class="category-content">
-                            <h4>AI Impact on Workforce</h4>
+                            <h4>
+                </div>
+            </div>
+
+            <div class="action-section">
+                <button class="start-button" onclick="startAssessment()">
+                    Start Assessment
+                    <svg viewBox="0 0 24 24">
+                        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-dots" id="navigationDots"></div>
+
+    <div id="questionsContainer">
+        <!-- Questions will be dynamically inserted here -->
+    </div>
+
+    <div class="submit-section">
+        <div class="submit-container">
+            <h2>Ready to Submit?</h2>
+            <p>You have completed all questions. Click below to see your results.</p>
+            <button class="submit-button" id="submitButton" onclick="showResults()" disabled>
+                View Results
+            </button>
+        </div>
+    </div>
+
+    <div class="results" id="results">
+        <div class="results-content">
+            <h2>Assessment Complete!</h2>
+            <p>Thank you for completing the AI Exposure and Knowledge Assessment.</p>
+            <div class="score-circle" id="scoreCircle">0%</div>
+            <p class="score-message" id="scoreMessage"></p>
+            <div class="category-scores" id="categoryScores"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                category: "AI General Knowledge",
+                question: "Which of the following accurately defines Artificial Intelligence (AI)?",
+                options: [
+                    "Human-like robots",
+                    "Machines mimicking cognitive functions",
+                    "Simple automation",
+                    "Data storage systems",
+                    "I am not familiar with this term"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI General Knowledge",
+                question: "Machine Learning (ML) primarily focuses on:",
+                options: [
+                    "Automated hardware",
+                    "Learning from data",
+                    "Data visualization",
+                    "Basic software automation",
+                    "I don't know"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI General Knowledge",
+                question: "What is Natural Language Processing (NLP)?",
+                options: [
+                    "AI understanding and generating human language",
+                    "Language translation software only",
+                    "Hardware communication devices",
+                    "AI used exclusively for coding",
+                    "I am not familiar with NLP"
+                ],
+                correct: 0
+            },
+            {
+                category: "AI General Knowledge",
+                question: "AI-driven automation typically involves:",
+                options: [
+                    "Human oversight in all tasks",
+                    "Fully autonomous decision-making",
+                    "Task-specific automation",
+                    "All of the above",
+                    "I don't know"
+                ],
+                correct: 3
+            },
+            {
+                category: "AI Use Cases and Applications",
+                question: "Which of the following is an example of a service that can be significantly improved by AI-powered chatbots?",
+                options: [
+                    "Legal drafting of legislation",
+                    "Manual document storage",
+                    "Physical mail sorting",
+                    "Employee payroll management",
+                    "Not sure"
+                ],
+                correct: 0
+            },
+            {
+                category: "AI Use Cases and Applications",
+                question: "AI-driven virtual assistants in government services primarily enhance:",
+                options: [
+                    "Employee vacation scheduling",
+                    "Citizen engagement and service speed",
+                    "Office space utilization",
+                    "Employee recruitment",
+                    "Not familiar with such cases"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Use Cases and Applications",
+                question: "Identify a task that is NOT suitable for AI implementation:",
+                options: [
+                    "Fraud detection",
+                    "Emergency response optimization",
+                    "Strategic policy-making",
+                    "Data entry automation",
+                    "I don't know"
+                ],
+                correct: 2
+            },
+            {
+                category: "AI Use Cases and Applications",
+                question: "Synthetic data primarily helps in:",
+                options: [
+                    "Real-time operational monitoring",
+                    "Privacy compliance and AI model training",
+                    "Direct customer communication",
+                    "Managing employee tasks",
+                    "I am not familiar with synthetic data"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Governance and Ethics",
+                question: "Which of the following is NOT one of the AI ethical principles?",
+                options: [
+                    "Transparency",
+                    "Accountability",
+                    "Privacy violation",
+                    "Fairness",
+                    "I don't know"
+                ],
+                correct: 2
+            },
+            {
+                category: "AI Governance and Ethics",
+                question: "Transparency in AI primarily means:",
+                options: [
+                    "Clear explanation of AI decision processes",
+                    "Full automation with no human oversight",
+                    "Only sharing data internally",
+                    "Eliminating human decision-making",
+                    "Unsure"
+                ],
+                correct: 0
+            },
+            {
+                category: "AI Governance and Ethics",
+                question: "What does 'AI accountability' refer to?",
+                options: [
+                    "Speed of AI processing",
+                    "Responsibility for AI outcomes and impacts",
+                    "Technical proficiency of AI systems",
+                    "Efficiency in AI model training",
+                    "Not familiar with accountability in AI"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Governance and Ethics",
+                question: "Which global initiative sets ethical guidelines for AI?",
+                options: [
+                    "Paris Accord",
+                    "Hiroshima Process",
+                    "Kyoto Protocol",
+                    "Geneva Convention",
+                    "I don't know"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Impact on Workforce",
+                question: "AI augmentation in the workforce primarily leads to:",
+                options: [
+                    "Complete job automation",
+                    "Enhanced decision-making capabilities",
+                    "Reduced workforce training",
+                    "Increased routine tasks",
+                    "Unsure"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Impact on Workforce",
+                question: "Identify the sector least likely to experience immediate job automation due to AI:",
+                options: [
+                    "Clerical jobs",
+                    "Routine data entry",
+                    "Creative strategic planning",
+                    "Manufacturing",
+                    "Not familiar with this topic"
+                ],
+                correct: 2
+            },
+            {
+                category: "AI Impact on Workforce",
+                question: "AI-driven workforce transformation should include:",
+                options: [
+                    "Minimizing workforce involvement",
+                    "Continuous employee training and reskilling",
+                    "Eliminating managerial roles",
+                    "Increasing repetitive administrative tasks",
+                    "Unsure"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Impact on Workforce",
+                question: "AI literacy across job roles is critical because:",
+                options: [
+                    "It ensures full automation",
+                    "It reduces the need for human oversight",
+                    "It enhances organizational effectiveness",
+                    "It simplifies AI models",
+                    "I don't know"
+                ],
+                correct: 2
+            },
+            {
+                category: "Risk Tolerance and Potential Outlook",
+                question: "Your comfort level with implementing AI solutions in critical operations is:",
+                options: [
+                    "High",
+                    "Moderate",
+                    "Low",
+                    "Unsure",
+                    "Not applicable"
+                ],
+                correct: -1
+            },
+            {
+                category: "Risk Tolerance and Potential Outlook",
+                question: "How confident are you in distinguishing valuable AI solutions from industry hype?",
+                options: [
+                    "Very confident",
+                    "Somewhat confident",
+                    "Not confident",
+                    "Unsure",
+                    "Not familiar enough to judge"
+                ],
+                correct: -1
+            },
+            {
+                category: "Risk Tolerance and Potential Outlook",
+                question: "In your opinion, where does AI have the highest potential impact?",
+                options: [
+                    "Labor",
+                    "Social Development",
+                    "Civil Service",
+                    "Shared Services",
+                    "I don't know"
+                ],
+                correct: -1
+            },
+            {
+                category: "Risk Tolerance and Potential Outlook",
+                question: "Ethical considerations in AI deployments are:",
+                options: [
+                    "Essential in all cases",
+                    "Only important in sensitive areas",
+                    "Generally overstated",
+                    "Not necessary with transparent algorithms",
+                    "Unsure"
+                ],
+                correct: 0
+            }
+        ];
+
+        let answers = new Array(questions.length).fill(undefined);
+        let categoryScores = {};
+
+        function initializeCategories() {
+            questions.forEach(q => {
+                if (!categoryScores[q.category]) {
+                    categoryScores[q.category] = { correct: 0, total: 0 };
+                }
+            });
+        }
+
+        function startAssessment() {
+            // Hide landing page
+            document.getElementById('landingSection').style.display = 'none';
+            
+            // Show progress indicator
+            document.getElementById('progressIndicator').classList.add('active');
+            
+            // Scroll to first question
+            const firstQuestion = document.getElementById('question-0');
+            firstQuestion.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            const navigationDots = document.getElementById('navigationDots');
+            let html = '';
+            let dotsHtml = '';
+
+            questions.forEach((question, index) => {
+                html += `
+                    <div class="question-section" id="question-${index}">
+                        <div class="question-container">
+                            <div class="category-badge">${question.category}</div>
+                            <div class="question-header">
+                                <div class="question-number">${index + 1}</div>
+                                <h2 class="question-text">${question.question}</h2>
+                            </div>
+                            <div class="options">
+                                ${question.options.map((option, optionIndex) => `
+                                    <div class="option ${answers[index] === optionIndex ? 'selected' : ''}" 
+                                         onclick="selectOption(${index}, ${optionIndex})">
+                                        <span class="option-letter">${String.fromCharCode(65 + optionIndex)}</span>
+                                        <span class="option-text">${option}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${index < questions.length - 1 ? `
+                                <div class="scroll-indicator">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                                    </svg>
+                                    <div class="scroll-text">Scroll for next question</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+
+                dotsHtml += `
+                    <div class="nav-dot ${answers[index] !== undefined ? 'answered' : ''}" 
+                         onclick="scrollToQuestion(${index})" 
+                         id="dot-${index}">
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            navigationDots.innerHTML = dotsHtml;
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            answers[questionIndex] = optionIndex;
+            
+            // Update UI
+            const questionSection = document.getElementById(`question-${questionIndex}`);
+            const options = questionSection.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.toggle('selected', index === optionIndex);
+            });
+
+            // Update navigation dot
+            const dot = document.getElementById(`dot-${questionIndex}`);
+            dot.classList.add('answered');
+
+            updateProgress();
+
+            // Auto-scroll to next question after a short delay
+            setTimeout(() => {
+                if (questionIndex < questions.length - 1) {
+                    const nextQuestion = document.getElementById(`question-${questionIndex + 1}`);
+                    nextQuestion.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    // Scroll to submit section
+                    document.querySelector('.submit-section').scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 300);
+        }
+
+        function scrollToQuestion(index) {
+            const question = document.getElementById(`question-${index}`);
+            question.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateProgress() {
+            const answered = answers.filter(a => a !== undefined).length;
+            const percentage = (answered / questions.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${answered} of ${questions.length} questions answered`;
+            
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = answered < questions.length;
+        }
+
+        function calculateScores() {
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+
+            questions.forEach((question, index) => {
+                const category = question.category;
+                categoryScores[category].total++;
+                
+                if (question.correct !== -1) {
+                    totalQuestions++;
+                    if (answers[index] === question.correct) {
+                        categoryScores[category].correct++;
+                        totalCorrect++;
+                    }
+                }
+            });
+
+            return { totalCorrect, totalQuestions };
+        }
+
+        function showResults() {
+            const { totalCorrect, totalQuestions } = calculateScores();
+            const percentage = Math.round((totalCorrect / totalQuestions) * 100);
+            
+            // Hide everything
+            document.getElementById('questionsContainer').style.display = 'none';
+            document.querySelector('.submit-section').style.display = 'none';
+            document.getElementById('navigationDots').style.display = 'none';
+            document.getElementById('landingSection').style.display = 'none';
+            document.getElementById('progressIndicator').style.display = 'none';
+            
+            // Show results
+            document.getElementById('results').classList.add('active');
+            document.getElementById('scoreCircle').textContent = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = 'Excellent! You have a strong understanding of AI concepts and are well-prepared to lead AI initiatives.';
+            } else if (percentage >= 60) {
+                message = 'Good job! You have a solid foundation in AI knowledge with room for further development.';
+            } else if (percentage >= 40) {
+                message = 'You have basic AI knowledge. Consider exploring more AI resources to strengthen your understanding.';
+            } else {
+                message = 'This assessment reveals significant opportunities to enhance your AI knowledge and readiness.';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+            
+            // Display category scores
+            const categoryScoresHTML = Object.entries(categoryScores).map(([category, scores]) => {
+                const categoryPercentage = scores.total > 0 && scores.correct !== undefined ? 
+                    Math.round((scores.correct / scores.total) * 100) : 'N/A';
+                return `
+                    <div class="category-score">
+                        <h3>${category}</h3>
+                        <div class="category-score-value">${categoryPercentage}%</div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('categoryScores').innerHTML = categoryScoresHTML;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Update active navigation dot on scroll
+        window.addEventListener('scroll', () => {
+            const questionSections = document.querySelectorAll('.question-section');
+            const dots = document.querySelectorAll('.nav-dot');
+            
+            questionSections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                const isInView = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+                
+                if (isInView) {
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    if (dots[index]) {
+                        dots[index].classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Initialize
+        initializeCategories();
+        renderQuestions();
+        updateProgress();
+    </script>
+</body>
+</html>
