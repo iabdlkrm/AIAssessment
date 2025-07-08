@@ -14,7 +14,16 @@
         html {
             scroll-behavior: smooth;
             scroll-snap-type: y mandatory;
+            -webkit-scroll-snap-type: y mandatory;
             scroll-padding-top: 140px;
+            -webkit-scroll-padding-top: 140px;
+        }
+        @media (max-width: 900px) {
+            body.landing-active ~ html,
+            body.landing-active html {
+                scroll-snap-type: none !important;
+                -webkit-scroll-snap-type: none !important;
+            }
         }
 
         body {
@@ -1243,8 +1252,7 @@
             document.getElementById('questionsContainer').style.display = 'block';
             document.getElementById('navigationDots').style.display = window.innerWidth > 900 ? 'flex' : 'none';
             document.querySelector('.submit-section').style.display = 'flex';
-            const firstQuestion = document.getElementById('question-0');
-            firstQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            scrollToQuestion(0);
         }
 
         function renderQuestions() {
@@ -1315,27 +1323,37 @@
             // Auto-scroll to next question after a short delay
             setTimeout(() => {
                 if (questionIndex < questions.length - 1) {
-                    const nextQuestion = document.getElementById(`question-${questionIndex + 1}`);
-                    nextQuestion.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
+                    scrollToQuestion(questionIndex + 1);
                 } else {
                     // Scroll to submit section
-                    document.querySelector('.submit-section').scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
+                    const submitSection = document.querySelector('.submit-section');
+                    if (isSafari()) {
+                        const rect = submitSection.getBoundingClientRect();
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                        const targetY = rect.top + scrollTop - 70; // 70px header offset
+                        window.scrollTo({ top: targetY, behavior: 'smooth' });
+                    } else {
+                        submitSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
                 }
             }, 300);
         }
 
+        // Safari scrollIntoView fallback
+        function isSafari() {
+            return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        }
         function scrollToQuestion(index) {
             const question = document.getElementById(`question-${index}`);
-            question.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'center'
-            });
+            if (isSafari()) {
+                // Manual centering for Safari
+                const rect = question.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const targetY = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2) - 70; // 70px header offset
+                window.scrollTo({ top: targetY, behavior: 'smooth' });
+            } else {
+                question.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
 
         function updateProgress() {
