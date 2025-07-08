@@ -14,6 +14,7 @@
         html {
             scroll-behavior: smooth;
             scroll-snap-type: y mandatory;
+            scroll-padding-top: 80px;
         }
 
         body {
@@ -21,6 +22,7 @@
             background: #f8f9fa;
             color: #2c3e50;
             overflow-x: hidden;
+            scroll-snap-type: y mandatory;
         }
 
         .header {
@@ -69,8 +71,10 @@
 
         .logo img {
             height: 100%;
-            width: auto;
-            max-width: 150px;
+            width: 100%;
+            object-fit: contain;
+            max-width: 100%;
+            max-height: 100%;
         }
 
         .logo-placeholder {
@@ -151,11 +155,11 @@
             }
 
             .question-section {
-                padding-top: 160px;
+                padding-top: 120px;
             }
 
             .question-section:first-child {
-                padding-top: 180px;
+                padding-top: 140px;
             }
         }
 
@@ -166,14 +170,15 @@
             justify-content: center;
             padding: 20px;
             background: linear-gradient(135deg, #f5f7fa 0%, #e8f5e9 100%);
-            scroll-snap-align: start;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
         }
 
         .landing-container {
             background: white;
             border-radius: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            padding: 60px;
+            padding: 40px;
             max-width: 800px;
             width: 100%;
             text-align: center;
@@ -193,14 +198,14 @@
         }
 
         .landing-icon {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, #00a86b 0%, #00796b 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
+            margin: 0 auto 20px;
             box-shadow: 0 10px 30px rgba(0, 168, 107, 0.2);
             position: relative;
             z-index: 1;
@@ -213,19 +218,19 @@
         }
 
         .landing-title {
-            font-size: 36px;
+            font-size: 28px;
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 700;
             position: relative;
             z-index: 1;
         }
 
         .landing-subtitle {
-            font-size: 20px;
+            font-size: 16px;
             color: #6c757d;
-            margin-bottom: 40px;
-            line-height: 1.6;
+            margin-bottom: 25px;
+            line-height: 1.5;
             position: relative;
             z-index: 1;
         }
@@ -233,8 +238,8 @@
         .assessment-info {
             background: #f8f9fa;
             border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
+            padding: 20px;
+            margin-bottom: 25px;
             position: relative;
             z-index: 1;
         }
@@ -242,8 +247,8 @@
         .info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin-bottom: 25px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .info-item {
@@ -267,26 +272,26 @@
         .assessment-description {
             text-align: left;
             color: #495057;
-            line-height: 1.8;
-            font-size: 16px;
+            line-height: 1.6;
+            font-size: 14px;
         }
 
         .assessment-description h3 {
             color: #00a86b;
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 16px;
+            margin-bottom: 10px;
             font-weight: 600;
         }
 
         .assessment-description ul {
             list-style: none;
             padding: 0;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .assessment-description li {
-            padding-left: 30px;
-            margin-bottom: 10px;
+            padding-left: 25px;
+            margin-bottom: 8px;
             position: relative;
         }
 
@@ -303,8 +308,8 @@
             background: linear-gradient(135deg, #00a86b 0%, #00796b 100%);
             color: white;
             border: none;
-            padding: 20px 60px;
-            font-size: 20px;
+            padding: 16px 50px;
+            font-size: 18px;
             font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
@@ -330,33 +335,33 @@
 
         @media (max-width: 768px) {
             .landing-container {
-                padding: 40px 25px;
+                padding: 25px 20px;
             }
 
             .landing-title {
-                font-size: 28px;
+                font-size: 24px;
             }
 
             .landing-subtitle {
-                font-size: 16px;
+                font-size: 14px;
             }
 
             .info-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 12px;
             }
 
             .assessment-info {
-                padding: 20px;
+                padding: 15px;
             }
 
             .assessment-description {
-                font-size: 14px;
+                font-size: 13px;
             }
 
             .start-button {
-                padding: 16px 40px;
-                font-size: 18px;
+                padding: 14px 40px;
+                font-size: 16px;
             }
         }
 
@@ -365,13 +370,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 120px 20px 20px;
-            scroll-snap-align: start;
+            padding: 0 20px;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
             position: relative;
+            min-height: 100vh;
+            box-sizing: border-box;
         }
 
         .question-section:first-of-type {
-            padding-top: 140px;
+            padding-top: 0;
         }
 
         .question-container {
@@ -384,6 +392,7 @@
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.6s forwards;
+            margin: 0 auto;
         }
 
         .question-section:nth-child(odd) .question-container {
@@ -578,31 +587,36 @@
         }
 
         .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
             text-align: center;
+            margin-top: 30px;
+            opacity: 0.7;
             animation: bounce 2s infinite;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-
         .scroll-indicator svg {
-            width: 30px;
-            height: 30px;
+            width: 24px;
+            height: 24px;
             fill: #00a86b;
-            opacity: 0.5;
+            margin-bottom: 8px;
         }
 
         .scroll-text {
             font-size: 12px;
             color: #6c757d;
-            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
         }
 
         .submit-section {
@@ -611,7 +625,8 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            scroll-snap-align: start;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
             background: #f8f9fa;
         }
 
@@ -812,7 +827,7 @@
                         <li>AI Impact on Workforce - Transformation and adaptation</li>
                         <li>Risk Tolerance and Potential Outlook - Strategic perspectives</li>
                     </ul>
-                    <p style="margin-top: 20px; font-style: italic; color: #6c757d;">
+                    <p style="margin-top: 15px; font-style: italic; color: #6c757d; font-size: 13px;">
                         This assessment is designed for C-level Executives and Legislators to evaluate their AI readiness and identify areas for development.
                     </p>
                 </div>
@@ -831,9 +846,7 @@
         <div class="header-content">
             <div class="logo-section">
                 <div class="logo">
-                    <!-- Replace this placeholder with actual HRSD logo -->
-                    <!-- <img src="hrsd-logo.png" alt="HRSD Logo"> -->
-                    <span class="logo-placeholder">HRSD LOGO</span>
+                    <img src="logo.png" alt="HRSD Logo">
                 </div>
                 <div class="header-text">
                     <h1>AI Exposure and Knowledge Assessment</h1>
@@ -849,13 +862,13 @@
         </div>
     </div>
 
-    <div class="navigation-dots" id="navigationDots"></div>
+    <div class="navigation-dots" id="navigationDots" style="display: none;"></div>
 
-    <div id="questionsContainer">
+    <div id="questionsContainer" style="display: none;">
         <!-- Questions will be dynamically inserted here -->
     </div>
 
-    <div class="submit-section">
+    <div class="submit-section" style="display: none;">
         <div class="submit-container">
             <h2>Ready to Submit?</h2>
             <p>You have completed all questions. Click below to see your results.</p>
@@ -1139,9 +1152,17 @@
             // Show header
             document.getElementById('header').style.display = 'block';
             
+            // Show questions container and navigation
+            document.getElementById('questionsContainer').style.display = 'block';
+            document.getElementById('navigationDots').style.display = 'flex';
+            document.querySelector('.submit-section').style.display = 'flex';
+            
             // Scroll to first question
             const firstQuestion = document.getElementById('question-0');
-            firstQuestion.scrollIntoView({ behavior: 'smooth' });
+            firstQuestion.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
         }
 
         function renderQuestions() {
@@ -1213,17 +1234,26 @@
             setTimeout(() => {
                 if (questionIndex < questions.length - 1) {
                     const nextQuestion = document.getElementById(`question-${questionIndex + 1}`);
-                    nextQuestion.scrollIntoView({ behavior: 'smooth' });
+                    nextQuestion.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
                 } else {
                     // Scroll to submit section
-                    document.querySelector('.submit-section').scrollIntoView({ behavior: 'smooth' });
+                    document.querySelector('.submit-section').scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
                 }
             }, 300);
         }
 
         function scrollToQuestion(index) {
             const question = document.getElementById(`question-${index}`);
-            question.scrollIntoView({ behavior: 'smooth' });
+            question.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
         }
 
         function updateProgress() {
@@ -1302,12 +1332,16 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Smart header scroll behavior
+        // Smart header scroll behavior with enhanced snap functionality
+        let isScrolling = false;
+        let scrollTimeout;
+
         function handleScroll() {
             const header = document.getElementById('header');
             const currentScrollY = window.scrollY;
             
             clearTimeout(hideTimeout);
+            clearTimeout(scrollTimeout);
             
             if (currentScrollY > lastScrollY && currentScrollY > 100) {
                 // Scrolling down - hide header
@@ -1328,6 +1362,40 @@
 
             // Update active navigation dot
             updateActiveDot();
+
+            // Enhanced scroll snapping
+            if (!isScrolling) {
+                isScrolling = true;
+                scrollTimeout = setTimeout(() => {
+                    snapToNearestSection();
+                    isScrolling = false;
+                }, 150);
+            }
+        }
+
+        function snapToNearestSection() {
+            const sections = document.querySelectorAll('.landing-section, .question-section, .submit-section');
+            const windowCenter = window.innerHeight / 2;
+            let closestSection = null;
+            let closestDistance = Infinity;
+
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const sectionCenter = rect.top + rect.height / 2;
+                const distance = Math.abs(windowCenter - sectionCenter);
+
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestSection = section;
+                }
+            });
+
+            if (closestSection && closestDistance > 30) {
+                closestSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
         }
 
         function updateActiveDot() {
