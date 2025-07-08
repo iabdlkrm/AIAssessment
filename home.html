@@ -1181,6 +1181,7 @@
         function startAssessment() {
             document.getElementById('landingSection').style.display = 'none';
             document.body.classList.remove('landing-active');
+            document.documentElement.classList.remove('no-snap');
             document.getElementById('header').style.display = 'block';
             document.getElementById('questionsContainer').style.display = 'block';
             document.getElementById('navigationDots').style.display = window.innerWidth > 900 ? 'flex' : 'none';
