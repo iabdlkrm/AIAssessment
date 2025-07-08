@@ -733,18 +733,23 @@
         .results {
             display: none;
             min-height: 100vh;
-            padding: 120px 20px 40px;
+            padding: 0;
             background: white;
+            justify-content: center;
+            align-items: center;
+            display: flex;
         }
-
         .results.active {
-            display: block;
+            display: flex;
         }
-
         .results-content {
             max-width: 1000px;
             margin: 0 auto;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .results h2 {
@@ -925,20 +930,17 @@
     <div class="submit-section" style="display: none;">
         <div class="submit-container">
             <h2>Ready to Submit?</h2>
-            <p>You have completed all questions. Click below to see your results.</p>
+            <p>You have completed all questions. Click below to submit your responses.</p>
             <button class="submit-button" id="submitButton" onclick="showResults()" disabled>
-                View Results
+                Submit
             </button>
         </div>
     </div>
 
     <div class="results" id="results">
         <div class="results-content">
-            <h2>Assessment Complete!</h2>
-            <p>Thank you for completing the AI Exposure and Knowledge Assessment.</p>
-            <div class="score-circle" id="scoreCircle">0%</div>
-            <p class="score-message" id="scoreMessage"></p>
-            <div class="category-scores" id="categoryScores"></div>
+            <h2>Assessment Submitted!</h2>
+            <p>Thank you for completing the assessment. Our team will review your responses and follow up with the results shortly.</p>
         </div>
     </div>
 
@@ -1334,48 +1336,13 @@
         }
 
         function showResults() {
-            const { totalCorrect, totalQuestions } = calculateScores();
-            const percentage = Math.round((totalCorrect / totalQuestions) * 100);
-            
             // Hide questions and submit section
             document.getElementById('questionsContainer').style.display = 'none';
             document.querySelector('.submit-section').style.display = 'none';
             document.getElementById('navigationDots').style.display = 'none';
             document.getElementById('landingSection').style.display = 'none';
-            
-            // Show results
+            // Show thank you message
             document.getElementById('results').classList.add('active');
-            document.getElementById('scoreCircle').textContent = `${percentage}%`;
-            
-            let message = '';
-            if (percentage >= 80) {
-                message = 'Excellent! You have a strong understanding of AI concepts and are well-prepared to lead AI initiatives.';
-            } else if (percentage >= 60) {
-                message = 'Good job! You have a solid foundation in AI knowledge with room for further development.';
-            } else if (percentage >= 40) {
-                message = 'You have basic AI knowledge. Consider exploring more AI resources to strengthen your understanding.';
-            } else {
-                message = 'This assessment reveals significant opportunities to enhance your AI knowledge and readiness.';
-            }
-            
-            document.getElementById('scoreMessage').textContent = message;
-            
-            // Display category scores
-            const categoryScoresHTML = Object.entries(categoryScores).map(([category, scores]) => {
-                const categoryPercentage = scores.total > 0 && scores.correct !== undefined ? 
-                    Math.round((scores.correct / scores.total) * 100) : 'N/A';
-                return `
-                    <div class="category-score">
-                        <h3>${category}</h3>
-                        <div class="category-score-value">${categoryPercentage}%</div>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('categoryScores').innerHTML = categoryScoresHTML;
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Smart header scroll behavior with enhanced snap functionality
