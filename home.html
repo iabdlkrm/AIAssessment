@@ -1,0 +1,1412 @@
+<p>Transformation strategies</p>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                            </svg>
+                        </div>
+                        <div class="category-content">
+                            <h4>Risk & Outlook</h4>
+                            <p>Strategic perspectives</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-section">
+                <button class="start-button" onclick="startAssessment()">
+                    Start Assessment
+                    <svg viewBox="0 0 24 24">
+                        <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation-dots" id="navigationDots"></div>
+
+    <div id="questionsContainer">
+        <!-- Questions will be dynamically inserted here -->
+    </div>
+
+    <div class="submit-section">
+        <div class="submit-container">
+            <h2>Ready to Submit?</h2>
+            <p>You have completed all questions. Click below to see your results.</p>
+            <button class="submit-button" id="submitButton" onclick="showResults()" disabled>
+                View Results
+            </button>
+        </div>
+    </div>
+
+    <div class="results" id="results">
+        <div class="results-content">
+            <h2>Assessment Complete!</h2>
+            <p>Thank you for completing the AI Exposure and Knowledge Assessment.</p>
+            <div class="score-circle" id="scoreCircle">0%</div>
+            <p class="score-message" id="scoreMessage"></p>
+            <div class="category-scores" id="categoryScores"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                category: "AI General Knowledge",
+                question: "Which of the following accurately defines Artificial Intelligence (AI)?",
+                options: [
+                    "Human-like robots",
+                    "Machines mimicking cognitive functions",
+                    "Simple automation",
+                    "Data storage systems",
+                    "I am not familiar with this term"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI General Knowledge",
+                question: "Machine Learning (ML) primarily focuses on:",
+                options: [
+                    "Automated hardware",
+                    "Learning from data",
+                    "Data visualization",
+                    "Basic software automation",
+                    "I don't know"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI General Knowledge",
+                question: "What is Natural Language Processing (NLP)?",
+                options: [
+                    "AI understanding and generating human language",
+                    "Language translation software only",
+                    "Hardware communication devices",
+                    "AI used exclusively for coding",
+                    "I am not familiar with NLP"
+                ],
+                correct: 0
+            },
+            {
+                category: "AI General Knowledge",
+                question: "AI-driven automation typically involves:",
+                options: [
+                    "Human oversight in all tasks",
+                    "Fully autonomous decision-making",
+                    "Task-specific automation",
+                    "All of the above",
+                    "I don't know"
+                ],
+                correct: 3
+            },
+            {
+                category: "AI Use Cases and Applications",
+                question: "Which of the following is an example of a service that can be significantly improved by AI-powered chatbots?",
+                options: [
+                    "Legal drafting of legislation",
+                    "Manual document storage",
+                    "Physical mail sorting",
+                    "Employee payroll management",
+                    "Not sure"
+                ],
+                correct: 0
+            },
+            {
+                category: "AI Use Cases and Applications",
+                question: "AI-driven virtual assistants in government services primarily enhance:",
+                options: [
+                    "Employee vacation scheduling",
+                    "Citizen engagement and service speed",
+                    "Office space utilization",
+                    "Employee recruitment",
+                    "Not familiar with such cases"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Use Cases and Applications",
+                question: "Identify a task that is NOT suitable for AI implementation:",
+                options: [
+                    "Fraud detection",
+                    "Emergency response optimization",
+                    "Strategic policy-making",
+                    "Data entry automation",
+                    "I don't know"
+                ],
+                correct: 2
+            },
+            {
+                category: "AI Use Cases and Applications",
+                question: "Synthetic data primarily helps in:",
+                options: [
+                    "Real-time operational monitoring",
+                    "Privacy compliance and AI model training",
+                    "Direct customer communication",
+                    "Managing employee tasks",
+                    "I am not familiar with synthetic data"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Governance and Ethics",
+                question: "Which of the following is NOT one of the AI ethical principles?",
+                options: [
+                    "Transparency",
+                    "Accountability",
+                    "Privacy violation",
+                    "Fairness",
+                    "I don't know"
+                ],
+                correct: 2
+            },
+            {
+                category: "AI Governance and Ethics",
+                question: "Transparency in AI primarily means:",
+                options: [
+                    "Clear explanation of AI decision processes",
+                    "Full automation with no human oversight",
+                    "Only sharing data internally",
+                    "Eliminating human decision-making",
+                    "Unsure"
+                ],
+                correct: 0
+            },
+            {
+                category: "AI Governance and Ethics",
+                question: "What does 'AI accountability' refer to?",
+                options: [
+                    "Speed of AI processing",
+                    "Responsibility for AI outcomes and impacts",
+                    "Technical proficiency of AI systems",
+                    "Efficiency in AI model training",
+                    "Not familiar with accountability in AI"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Governance and Ethics",
+                question: "Which global initiative sets ethical guidelines for AI?",
+                options: [
+                    "Paris Accord",
+                    "Hiroshima Process",
+                    "Kyoto Protocol",
+                    "Geneva Convention",
+                    "I don't know"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Impact on Workforce",
+                question: "AI augmentation in the workforce primarily leads to:",
+                options: [
+                    "Complete job automation",
+                    "Enhanced decision-making capabilities",
+                    "Reduced workforce training",
+                    "Increased routine tasks",
+                    "Unsure"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Impact on Workforce",
+                question: "Identify the sector least likely to experience immediate job automation due to AI:",
+                options: [
+                    "Clerical jobs",
+                    "Routine data entry",
+                    "Creative strategic planning",
+                    "Manufacturing",
+                    "Not familiar with this topic"
+                ],
+                correct: 2
+            },
+            {
+                category: "AI Impact on Workforce",
+                question: "AI-driven workforce transformation should include:",
+                options: [
+                    "Minimizing workforce involvement",
+                    "Continuous employee training and reskilling",
+                    "Eliminating managerial roles",
+                    "Increasing repetitive administrative tasks",
+                    "Unsure"
+                ],
+                correct: 1
+            },
+            {
+                category: "AI Impact on Workforce",
+                question: "AI literacy across job roles is critical because:",
+                options: [
+                    "It ensures full automation",
+                    "It reduces the need for human oversight",
+                    "It enhances organizational effectiveness",
+                    "It simplifies AI models",
+                    "I don't know"
+                ],
+                correct: 2
+            },
+            {
+                category: "Risk Tolerance and Potential Outlook",
+                question: "Your comfort level with implementing AI solutions in critical operations is:",
+                options: [
+                    "High",
+                    "Moderate",
+                    "Low",
+                    "Unsure",
+                    "Not applicable"
+                ],
+                correct: -1
+            },
+            {
+                category: "Risk Tolerance and Potential Outlook",
+                question: "How confident are you in distinguishing valuable AI solutions from industry hype?",
+                options: [
+                    "Very confident",
+                    "Somewhat confident",
+                    "Not confident",
+                    "Unsure",
+                    "Not familiar enough to judge"
+                ],
+                correct: -1
+            },
+            {
+                category: "Risk Tolerance and Potential Outlook",
+                question: "In your opinion, where does AI have the highest potential impact?",
+                options: [
+                    "Labor",
+                    "Social Development",
+                    "Civil Service",
+                    "Shared Services",
+                    "I don't know"
+                ],
+                correct: -1
+            },
+            {
+                category: "Risk Tolerance and Potential Outlook",
+                question: "Ethical considerations in AI deployments are:",
+                options: [
+                    "Essential in all cases",
+                    "Only important in sensitive areas",
+                    "Generally overstated",
+                    "Not necessary with transparent algorithms",
+                    "Unsure"
+                ],
+                correct: 0
+            }
+        ];
+
+        let answers = new Array(questions.length).fill(undefined);
+        let categoryScores = {};
+
+        function initializeCategories() {
+            questions.forEach(q => {
+                if (!categoryScores[q.category]) {
+                    categoryScores[q.category] = { correct: 0, total: 0 };
+                }
+            });
+        }
+
+        function startAssessment() {
+            // Hide landing page
+            document.getElementById('landingSection').style.display = 'none';
+            
+            // Show progress indicator
+            document.getElementById('progressIndicator').classList.add('active');
+            
+            // Show first question
+            const firstQuestion = document.getElementById('question-0');
+            firstQuestion.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            const navigationDots = document.getElementById('navigationDots');
+            let html = '';
+            let dotsHtml = '';
+
+            questions.forEach((question, index) => {
+                html += `
+                    <div class="question-section" id="question-${index}">
+                        <div class="question-container">
+                            <div class="category-badge">${question.category}</div>
+                            <div class="question-header">
+                                <div class="question-number">${index + 1}</div>
+                                <h2 class="question-text">${question.question}</h2>
+                            </div>
+                            <div class="options">
+                                ${question.options.map((option, optionIndex) => `
+                                    <div class="option ${answers[index] === optionIndex ? 'selected' : ''}" 
+                                         onclick="selectOption(${index}, ${optionIndex})">
+                                        <span class="option-letter">${String.fromCharCode(65 + optionIndex)}</span>
+                                        <span class="option-text">${option}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            ${index < questions.length - 1 ? `
+                                <div class="scroll-indicator">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                                    </svg>
+                                    <div class="scroll-text">Scroll for next question</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+
+                dotsHtml += `
+                    <div class="nav-dot ${answers[index] !== undefined ? 'answered' : ''}" 
+                         onclick="scrollToQuestion(${index})" 
+                         id="dot-${index}">
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            navigationDots.innerHTML = dotsHtml;
+        }
+
+        function selectOption(questionIndex, optionIndex) {
+            answers[questionIndex] = optionIndex;
+            
+            // Update UI
+            const questionSection = document.getElementById(`question-${questionIndex}`);
+            const options = questionSection.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                option.classList.toggle('selected', index === optionIndex);
+            });
+
+            // Update navigation dot
+            const dot = document.getElementById(`dot-${questionIndex}`);
+            dot.classList.add('answered');
+
+            updateProgress();
+
+            // Auto-advance to next question after a short delay
+            setTimeout(() => {
+                if (questionIndex < questions.length - 1) {
+                    // Hide current question
+                    questionSection.classList.remove('active');
+                    
+                    // Show next question
+                    const nextQuestion = document.getElementById(`question-${questionIndex + 1}`);
+                    nextQuestion.classList.add('active');
+                } else {
+                    // Hide current question and show submit section
+                    questionSection.classList.remove('active');
+                    document.querySelector('.submit-section').classList.add('active');
+                }
+            }, 800);
+        }
+
+        function scrollToQuestion(index) {
+            const question = document.getElementById(`question-${index}`);
+            question.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateProgress() {
+            const answered = answers.filter(a => a !== undefined).length;
+            const percentage = (answered / questions.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${answered} of ${questions.length} questions answered`;
+            
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = answered < questions.length;
+        }
+
+        function calculateScores() {
+            let totalCorrect = 0;
+            let totalQuestions = 0;
+
+            questions.forEach((question, index) => {
+                const category = question.category;
+                categoryScores[category].total++;
+                
+                if (question.correct !== -1) {
+                    totalQuestions++;
+                    if (answers[index] === question.correct) {
+                        categoryScores[category].correct++;
+                        totalCorrect++;
+                    }
+                }
+            });
+
+            return { totalCorrect, totalQuestions };
+        }
+
+        function showResults() {
+            const { totalCorrect, totalQuestions } = calculateScores();
+            const percentage = Math.round((totalCorrect / totalQuestions) * 100);
+            
+            // Hide everything
+            document.getElementById('questionsContainer').style.display = 'none';
+            document.querySelector('.submit-section').style.display = 'none';
+            document.getElementById('navigationDots').style.display = 'none';
+            document.getElementById('landingSection').style.display = 'none';
+            document.getElementById('progressIndicator').style.display = 'none';
+            
+            // Show results
+            document.getElementById('results').classList.add('active');
+            document.getElementById('scoreCircle').textContent = `${percentage}%`;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = 'Excellent! You have a strong understanding of AI concepts and are well-prepared to lead AI initiatives.';
+            } else if (percentage >= 60) {
+                message = 'Good job! You have a solid foundation in AI knowledge with room for further development.';
+            } else if (percentage >= 40) {
+                message = 'You have basic AI knowledge. Consider exploring more AI resources to strengthen your understanding.';
+            } else {
+                message = 'This assessment reveals significant opportunities to enhance your AI knowledge and readiness.';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+            
+            // Display category scores
+            const categoryScoresHTML = Object.entries(categoryScores).map(([category, scores]) => {
+                const categoryPercentage = scores.total > 0 && scores.correct !== undefined ? 
+                    Math.round((scores.correct / scores.total) * 100) : 'N/A';
+                return `
+                    <div class="category-score">
+                        <h3>${category}</h3>
+                        <div class="category-score-value">${categoryPercentage}%</div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('categoryScores').innerHTML = categoryScoresHTML;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Update active navigation dot on scroll
+        window.addEventListener('scroll', () => {
+            const questionSections = document.querySelectorAll('.question-section');
+            const dots = document.querySelectorAll('.nav-dot');
+            
+            questionSections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                const isInView = rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+                
+                if (isInView) {
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    if (dots[index]) {
+                        dots[index].classList.add('active');
+                    }
+                }
+            });
+        });
+
+        // Initialize
+        initializeCategories();
+        renderQuestions();
+        updateProgress();
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Exposure and Knowledge Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f8f9fa;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+
+        .landing-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #00a86b 0%, #00796b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .landing-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+            animation: float 20s infinite linear;
+        }
+
+        .landing-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
+            animation: float 25s infinite linear reverse;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .landing-container {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+            padding: 60px;
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .landing-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .logo-title-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo-placeholder {
+            font-weight: bold;
+            color: #00a86b;
+            font-size: 16px;
+            padding: 0 10px;
+        }
+
+        .title-section h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .title-section p {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .hero-content {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #00a86b 0%, #00796b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 15px 40px rgba(0, 168, 107, 0.25);
+            position: relative;
+        }
+
+        .hero-icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00a86b 0%, #00796b 100%);
+            opacity: 0.3;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.1; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        .hero-icon svg {
+            width: 60px;
+            height: 60px;
+            fill: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #6c757d;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #00a86b;
+            box-shadow: 0 10px 30px rgba(0, 168, 107, 0.15);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #00a86b;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .categories-section {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .categories-title {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .categories-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .category-item {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #00a86b;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .category-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .category-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #00a86b;
+        }
+
+        .category-content h4 {
+            font-size: 15px;
+            color: #2c3e50;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .category-content p {
+            font-size: 13px;
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .action-section {
+            text-align: center;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #00a86b 0%, #00796b 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 168, 107, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .start-button:hover::before {
+            left: 100%;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 168, 107, 0.4);
+        }
+
+        .start-button svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .progress-indicator {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-indicator.active {
+            display: flex;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 150px;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00a86b 0%, #00796b 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+
+        .question-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px 20px;
+            scroll-snap-align: start;
+            position: relative;
+            display: none;
+        }
+
+        .question-section.active {
+            display: flex;
+        }
+
+        .question-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            padding: 50px;
+            max-width: 800px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #00a86b;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            background: #00a86b;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 20px;
+            color: #2c3e50;
+            line-height: 1.6;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .options {
+            margin-top: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 18px 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 168, 107, 0.05) 0%, transparent 100%);
+            transition: width 0.3s ease;
+        }
+
+        .option:hover::before {
+            width: 100%;
+        }
+
+        .option:hover {
+            border-color: #00a86b;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: #e8f5e9;
+            border-color: #00a86b;
+            font-weight: 500;
+        }
+
+        .option-letter {
+            display: inline-flex;
+            width: 32px;
+            height: 32px;
+            background: white;
+            border: 2px solid #00a86b;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #00a86b;
+            margin-right: 16px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .option.selected .option-letter {
+            background: #00a86b;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .option-text {
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .navigation-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot:hover {
+            transform: scale(1.3);
+            background: #00a86b;
+        }
+
+        .nav-dot.active {
+            background: #00a86b;
+            transform: scale(1.2);
+        }
+
+        .nav-dot.answered {
+            background: #00a86b;
+            opacity: 0.5;
+        }
+
+        .nav-dot.answered.active {
+            opacity: 1;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            fill: #00a86b;
+            opacity: 0.5;
+        }
+
+        .scroll-text {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .submit-section {
+            height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            scroll-snap-align: start;
+            background: #f8f9fa;
+        }
+
+        .submit-section.active {
+            display: flex;
+        }
+
+        .submit-container {
+            text-align: center;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .submit-container h2 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .submit-container p {
+            color: #6c757d;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #00a86b 0%, #00796b 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 168, 107, 0.3);
+        }
+
+        .submit-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 168, 107, 0.4);
+        }
+
+        .submit-button:disabled {
+            background: #ced4da;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .results {
+            display: none;
+            min-height: 100vh;
+            padding: 60px 20px 40px;
+            background: white;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .results-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .results h2 {
+            color: #00a86b;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00a86b 0%, #00796b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px auto;
+            color: white;
+            font-size: 54px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0, 168, 107, 0.3);
+        }
+
+        .score-message {
+            font-size: 20px;
+            color: #6c757d;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .category-scores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .category-score {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #00a86b;
+        }
+
+        .category-score h3 {
+            color: #00a86b;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .category-score-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .landing-container {
+                padding: 40px 25px;
+            }
+
+            .landing-header {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .logo-title-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .categories-list {
+                grid-template-columns: 1fr;
+            }
+
+            .question-container {
+                padding: 30px 20px;
+            }
+
+            .question-header {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .question-text {
+                font-size: 18px;
+            }
+
+            .option {
+                padding: 15px 18px;
+            }
+
+            .option-text {
+                font-size: 14px;
+            }
+
+            .navigation-dots {
+                display: none;
+            }
+
+            .progress-indicator {
+                top: 10px;
+                padding: 8px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .progress-bar {
+                width: 120px;
+            }
+
+            .results-content {
+                padding: 0 15px;
+            }
+
+            .category-scores {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-indicator" id="progressIndicator">
+        <div class="progress-text" id="progressText">0 of 20 questions answered</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <div class="landing-section" id="landingSection">
+        <div class="landing-container">
+            <div class="landing-header">
+                <div class="logo-title-section">
+                    <div class="logo">
+                        <!-- Replace this placeholder with actual HRSD logo -->
+                        <!-- <img src="hrsd-logo.png" alt="HRSD Logo"> -->
+                        <span class="logo-placeholder">HRSD LOGO</span>
+                    </div>
+                    <div class="title-section">
+                        <h1>AI Exposure and Knowledge Assessment</h1>
+                        <p>Target Audience: C-level Executives and Legislators</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21.928 11.607c-.202-.488-.635-.605-.928-.633V8c0-1.103-.897-2-2-2h-6V4.61c.305-.274.5-.668.5-1.11a1.5 1.5 0 0 0-3 0c0 .442.195.836.5 1.11V6H5c-1.103 0-2 .897-2 2v2.997l-.082.006A1 1 0 0 0 1.99 12v2a1 1 0 0 0 1 1H3v5c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2v-5a1 1 0 0 0 1-1v-1.938a1.006 1.006 0 0 0-.072-.455zM5 20V8h14l.001 3.996L19 12v2l.001.005.001 5.995H5z"/>
+                        <ellipse cx="8.5" cy="12" rx="1.5" ry="2"/>
+                        <ellipse cx="15.5" cy="12" rx="1.5" ry="2"/>
+                        <path d="M8 16h8v2H8z"/>
+                    </svg>
+                </div>
+                <h2 class="hero-title">Evaluate Your AI Readiness</h2>
+                <p class="hero-subtitle">
+                    This comprehensive assessment will help you understand your current knowledge of AI concepts, 
+                    applications, and strategic implications for leadership and policy-making.
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Questions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Minutes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+            </div>
+
+            <div class="categories-section">
+                <h3 class="categories-title">Assessment Categories</h3>
+                <div class="categories-list">
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <div class="category-content">
+                            <h4>AI General Knowledge</h4>
+                            <p>Core concepts and fundamentals</p>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M9 13.75c-2.34 0-7 1.17-7 3.5V19h14v-1.75c0-2.33-4.66-3.5-7-3.5zM4.34 17c.84-.58 2.87-1.25 4.66-1.25s3.82.67 4.66 1.25H4.34zM9 12c1.93 0 3.5-1.57 3.5-3.5S10.93 5 9 5 5.5 6.57 5.5 8.5 7.07 12 9 12zm0-5c.83 0 1.5.67 1.5 1.5S9.83 10 9 10s-1.5-.67-1.5-1.5S8.17 7 9 7zm7.04 6.81c1.16.84 1.96 1.96 1.96 3.44V19h4v-1.75c0-2.02-3.5-3.17-5.96-3.44zM15 12c1.93 0 3.5-1.57 3.5-3.5S16.93 5 15 5c-.54 0-1.04.13-1.5.35.63.89 1 1.98 1 3.15s-.37 2.26-1 3.15c.46.22.96.35 1.5.35z"/>
+                            </svg>
+                        </div>
+                        <div class="category-content">
+                            <h4>AI Use Cases</h4>
+                            <p>Real-world applications</p>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                        <div class="category-content">
+                            <h4>AI Governance & Ethics</h4>
+                            <p>Principles and frameworks</p>
+                        </div>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 0 0-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1z"/>
+                            </svg>
+                        </div>
+                        <div class="category-content">
+                            <h4>AI Impact on Workforce</h4>
